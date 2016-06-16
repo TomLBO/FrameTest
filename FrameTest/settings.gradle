@@ -1,0 +1,8 @@
+include ':app', ':frescodemo', ':butterknifedemo', ':loggerdemo', ':eventbusdemo', ':greendaodemo', ':greendaolib', ':retrofitdemo'
+
+def demo() {
+    println("____________________ohoh______________")
+}
+
+demo()
+

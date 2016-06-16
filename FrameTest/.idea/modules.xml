@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/FrameTest.iml" filepath="$PROJECT_DIR$/FrameTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/butterknifedemo/butterknifedemo.iml" filepath="$PROJECT_DIR$/butterknifedemo/butterknifedemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/eventbusdemo/eventbusdemo.iml" filepath="$PROJECT_DIR$/eventbusdemo/eventbusdemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/frescodemo/frescodemo.iml" filepath="$PROJECT_DIR$/frescodemo/frescodemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/greendaodemo/greendaodemo.iml" filepath="$PROJECT_DIR$/greendaodemo/greendaodemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/greendaolib/greendaolib.iml" filepath="$PROJECT_DIR$/greendaolib/greendaolib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/loggerdemo/loggerdemo.iml" filepath="$PROJECT_DIR$/loggerdemo/loggerdemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/retrofitdemo/retrofitdemo.iml" filepath="$PROJECT_DIR$/retrofitdemo/retrofitdemo.iml" />
+    </modules>
+  </component>
+</project>
