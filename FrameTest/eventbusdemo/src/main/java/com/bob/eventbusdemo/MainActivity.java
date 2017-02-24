@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 //        Log.d("haha", "onMessage: event.message" + event.message);
 //    }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN)//运行在主线程
     public void onEvent(FirstEvent event) {
         try {
             Thread.sleep(5000);
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
         }
         Logger.i(event.message);
     }
-    @Subscribe(threadMode = ThreadMode.POSTING)
+    @Subscribe(threadMode = ThreadMode.POSTING)//运行在发布线程
     public void onEvent(SecondEvent event) {
         try {
             Thread.sleep(5000);
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         }
         Logger.i(event.getMessage());
     }
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)//发布线程是主线线程,则开启新线程,否则在发布线程
     public void onEvent(ThirdEvent event) {
         try {
             Thread.sleep(5000);
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         }
         Logger.i(event.getMessage());
     }
-    @Subscribe(threadMode = ThreadMode.ASYNC)
+    @Subscribe(threadMode = ThreadMode.ASYNC)//运行在新线程
     public void onEvent(FourthEvent event) {
         try {
             Thread.sleep(5000);

@@ -1,4 +1,4 @@
-include ':app', ':frescodemo', ':butterknifedemo', ':loggerdemo', ':eventbusdemo', ':greendaodemo', ':greendaolib', ':retrofitdemo'
+include ':app', ':frescodemo', ':butterknifedemo', ':loggerdemo', ':eventbusdemo', ':retrofitdemo', ':greendaodemo', ':mvpdemo'
 
 def demo() {
     println("____________________ohoh______________")
