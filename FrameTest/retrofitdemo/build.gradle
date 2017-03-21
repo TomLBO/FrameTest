@@ -33,6 +33,8 @@ dependencies {
     compile "com.squareup.retrofit2:converter-gson:$RetrofitVersion"
     compile "com.squareup.retrofit2:adapter-rxjava:$RetrofitVersion"
     compile 'com.squareup.retrofit2:converter-scalars:2.0.0'
+    compile 'com.liulishuo.filedownloader:library:1.4.1'
+    compile 'cn.dreamtobe.filedownloader:filedownloader-okhttp3-connection:1.0.0'
 
     //TODO butterknife
     compile "com.jakewharton:butterknife:$ButterKnifeVersion"

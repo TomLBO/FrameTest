@@ -1,5 +1,9 @@
-package com.example.retrofitdemo;
+package com.example.retrofitdemo.api;
 
+import com.example.retrofitdemo.AppIsSafe;
+import com.example.retrofitdemo.Result;
+
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 

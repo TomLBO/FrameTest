@@ -3,21 +3,35 @@ package com.example.retrofitdemo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 
+import com.example.retrofitdemo.api.Api;
+import com.example.retrofitdemo.api.DownloadAPI;
+import com.example.retrofitdemo.api.HttpManager;
+import com.example.retrofitdemo.api.MeetingRequest;
 import com.google.gson.Gson;
+import com.liulishuo.filedownloader.BaseDownloadTask;
+import com.liulishuo.filedownloader.FileDownloadLargeFileListener;
+import com.liulishuo.filedownloader.FileDownloader;
+import com.liulishuo.filedownloader.connection.FileDownloadConnection;
+import com.liulishuo.filedownloader.services.DownloadMgrInitialParams;
+import com.liulishuo.filedownloader.util.FileDownloadHelper;
 import com.orhanobut.logger.Logger;
 
-import java.security.NoSuchAlgorithmException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-
-import javax.crypto.Mac;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.dreamtobe.filedownloader.OkHttp3Connection;
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<GitHubPerson> call, Response<GitHubPerson> response) {
                 GitHubPerson body = response.body();
 //                Log.d(TAG, "body.login = " + response.toString());
-//                Log.d(TAG, "body.login = " + body.login);
+//                log.d(TAG, "body.login = " + body.login);
                 Logger.d(body.login);
             }
 
@@ -102,7 +116,90 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.get)
     public void onClick() {
 //        get();
-        post();
+//        post();
+//        meetingRequest();
+        download();
+    }
+
+    private void download() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(DownloadAPI.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        DownloadAPI api = retrofit.create(DownloadAPI.class);
+
+//        Call<ResponseBody> download = api.downloadAS();
+//        download.enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                try {
+//                    byte[] bytes = response.body().bytes();
+//                    int a = bytes.length;
+//                    Log.d(TAG, "onResponse: length " + a);
+////                    File file = new File("/sdcard/as.exe");
+////                    FileOutputStream stream = new FileOutputStream(file);
+////                    stream.write(bytes);
+////                    stream.flush();
+////                    stream.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                t.printStackTrace();
+//            }
+//        });
+        String url = "https://dl.google.com/dl/android/studio/install/2.3.0.8/android-studio-bundle-162.3764568-windows.exe";
+
+
+        PostFileDownloadConnection connection = new PostFileDownloadConnection();
+        new OkHttp3Connection.Creator();
+
+//        new FileDownloader();
+        FileDownloader.init(this, new DownloadMgrInitialParams.InitCustomMaker()
+                .connectionCreator(new FileDownloadHelper.ConnectionCreator() {
+                    @Override
+                    public FileDownloadConnection create(String url) throws IOException {
+
+                        return null;
+                    }
+                }));
+        FileDownloader.getImpl().create(url).setPath("/sdcard/as.exe").setListener(new FileDownloadLargeFileListener() {
+            @Override
+            protected void pending(BaseDownloadTask task, long soFarBytes, long totalBytes) {
+                Log.d(TAG, "pending soFarBytes: " + soFarBytes);
+                Log.d(TAG, "pending totalBytes: " + totalBytes);
+            }
+
+            @Override
+            protected void progress(BaseDownloadTask task, long soFarBytes, long totalBytes) {
+                Log.d(TAG, "progress soFarBytes: " + soFarBytes);
+                Log.d(TAG, "progress totalBytes: " + totalBytes);
+            }
+
+            @Override
+            protected void paused(BaseDownloadTask task, long soFarBytes, long totalBytes) {
+                Log.d(TAG, "paused soFarBytes: " + soFarBytes);
+                Log.d(TAG, "paused totalBytes: " + totalBytes);
+            }
+
+            @Override
+            protected void completed(BaseDownloadTask task) {
+                Log.d(TAG, "completed: ");
+            }
+
+            @Override
+            protected void error(BaseDownloadTask task, Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            protected void warn(BaseDownloadTask task) {
+                Log.d(TAG, "warn: ");
+            }
+        }).start();
     }
 
     void post() {
@@ -154,6 +251,74 @@ public class MainActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+
+    }
+
+    void meetingRequest() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(MeetingRequest.BASE_URL)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        MeetingRequest request = retrofit.create(MeetingRequest.class);
+
+        HashMap<String, String> map = new HashMap<>();
+        String s = "zhangsan";
+        Call<String> meeting = request.getMeeting(s);
+        meeting.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                Log.d(TAG, "onResponse: " + response.body());
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+        Call<ResponseBody> downloadFile = request.downloadFile("张三", "f3233a91-3aec-4770-bc94-62553e1f57ef");
+        downloadFile.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                ResponseBody body = response.body();
+
+//                InputStream stream = body.byteStream();
+                File file = new File("/sdcard/typescript-handbook.pdf");
+                try {
+                    FileOutputStream stream1 = new FileOutputStream(file);
+
+                    stream1.write(body.bytes());
+
+                    stream1.flush();
+                    stream1.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+
+
+    }
+
+
+    public void download(View view) {
+
+    }
+
+    public void pause(View view) {
+
+    }
+
+    public void cancel(View view) {
 
     }
 }

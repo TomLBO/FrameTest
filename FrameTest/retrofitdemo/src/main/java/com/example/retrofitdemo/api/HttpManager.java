@@ -1,4 +1,6 @@
-package com.example.retrofitdemo;
+package com.example.retrofitdemo.api;
+
+import com.example.retrofitdemo.GitHubPerson;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
