@@ -10,6 +10,7 @@ import com.example.retrofitdemo.api.Api;
 import com.example.retrofitdemo.api.DownloadAPI;
 import com.example.retrofitdemo.api.HttpManager;
 import com.example.retrofitdemo.api.MeetingRequest;
+import com.example.retrofitdemo.bean.Login;
 import com.google.gson.Gson;
 import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloadLargeFileListener;
@@ -25,11 +26,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.dreamtobe.filedownloader.OkHttp3Connection;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -55,6 +58,31 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Logger.init("haha");
 
+
+    }
+
+    public void test(View v) {
+        Retrofit build = new Retrofit.Builder()
+                .baseUrl("http://10.100.23.12/QXZ.EMM.InterfaceSvc/")
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        Api api = build.create(Api.class);
+        Call<String> test = api.test("");
+        test.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+
+                Log.d(TAG, "onResponse: " + response.body());
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                t.printStackTrace();
+                Log.d(TAG, "onFailure: ");
+            }
+        });
     }
 
     private void get() {
@@ -320,5 +348,114 @@ public class MainActivity extends AppCompatActivity {
 
     public void cancel(View view) {
 
+    }
+
+    public void put(View view) {
+        Retrofit build = new Retrofit.Builder()
+                .baseUrl("http://www.baidu.com/")
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+
+        String loginId = "周希瑞";
+        String password = "aaa";
+        Api api = build.create(Api.class);
+        //put 1 json
+        Login login = new Login();
+
+        login.setAccount(loginId);
+        login.setPassword(password);
+        Call<ResponseBody> call = api.login(login);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.d(TAG, "login: " + response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
+        //put 2  json
+        Map<String, String> body = new HashMap<>();
+
+        body.put("LoginId", loginId);
+        body.put("Password", password);
+
+        Call<ResponseBody> call2 = api.login2(body);
+        call2.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.d(TAG, "login2: " + response.body().toString());
+
+//                String header = response.raw().headers()
+                Map<String, List<String>> map = response.headers().toMultimap();
+                for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+                    Log.d(TAG, entry.getKey() + ": " + entry.getValue());
+                }
+                int code = response.code();
+                Log.d(TAG, "code: " + code);
+
+                String message = response.message();
+                Log.d(TAG, "message: " + message);
+
+                try {
+                    String bodyStr = response.body().string();
+                    Log.d(TAG, "bodyString: " + bodyStr);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                long contentLength = response.body().contentLength();
+
+                Log.d(TAG, "contentLength: " + contentLength);
+
+                boolean successful = response.isSuccessful();
+                Log.d(TAG, "isSuccessful: " + successful);
+
+                MediaType type = response.body().contentType();
+                Log.d(TAG, "type : " + type.type());
+                Log.d(TAG, "subtype : " + type.subtype());
+                Log.d(TAG, "charset : " + type.charset());
+                Log.d(TAG, "type.toString : " + type.toString());
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
+        //put 3 key value
+        Call<ResponseBody> call3 = api.login3(loginId, password);
+        call3.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.d(TAG, "login3: " + response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
+        Call<ResponseBody> call4 = api.login4(body);
+        call4.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                Log.d(TAG, "login4: " + response);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 }

@@ -1,4 +1,4 @@
-include ':app', ':frescodemo', ':butterknifedemo', ':loggerdemo', ':eventbusdemo', ':retrofitdemo', ':greendaodemo', ':mvpdemo', ':lamdademo'
+include ':app', ':frescodemo', ':butterknifedemo', ':loggerdemo', ':eventbusdemo', ':retrofitdemo', ':greendaodemo', ':mvpdemo', ':lamdademo', ':webviewdemo'
 
 def demo() {
     println("____________________ohoh______________")

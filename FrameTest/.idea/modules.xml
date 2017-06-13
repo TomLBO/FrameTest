@@ -12,6 +12,7 @@
       <module fileurl="file://$PROJECT_DIR$/loggerdemo/loggerdemo.iml" filepath="$PROJECT_DIR$/loggerdemo/loggerdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvpdemo/mvpdemo.iml" filepath="$PROJECT_DIR$/mvpdemo/mvpdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/retrofitdemo/retrofitdemo.iml" filepath="$PROJECT_DIR$/retrofitdemo/retrofitdemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/webviewdemo/webviewdemo.iml" filepath="$PROJECT_DIR$/webviewdemo/webviewdemo.iml" />
     </modules>
   </component>
 </project>

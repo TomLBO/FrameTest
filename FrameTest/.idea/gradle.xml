@@ -18,6 +18,7 @@
             <option value="$PROJECT_DIR$/loggerdemo" />
             <option value="$PROJECT_DIR$/mvpdemo" />
             <option value="$PROJECT_DIR$/retrofitdemo" />
+            <option value="$PROJECT_DIR$/webviewdemo" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -33,4 +33,16 @@
         android:layout_height="wrap_content"
         android:onClick="cancel"
         android:text="cancel"/>
+
+    <Button
+        android:text="test"
+        android:onClick="test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:text="put"
+        android:onClick="put"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>
